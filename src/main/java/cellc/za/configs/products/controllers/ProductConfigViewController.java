@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -52,77 +54,108 @@ public class ProductConfigViewController {
 
     //Add product Form
     @PostMapping("/add") public String addProduct(Messages messages,
-                                                 ProductConfig product,
+
                              @RequestParam("operation") String operation,
                              @RequestParam("tarrif")    String tarrif,
                              @RequestParam("prodDesc")  String prodDesc,
-                             @RequestParam("channel")   String channel,
+                             //@RequestParam("channel")   String channel,
+                             @RequestParam(value = "ussd",defaultValue = "u") String ussd,
+                             @RequestParam(value = "eshop",defaultValue = "e") String eshop,
+                             @RequestParam(value = "app",defaultValue = "a") String app,
+                             @RequestParam(value = "cad",defaultValue = "c") String cad,
+
                              @RequestParam("expiry")    Integer expiry,
                              @RequestParam("route")     String route,
                              @RequestParam("subType")   String subType,
                              @RequestParam("sms")       String clientSMS ){
-         String pc_operation = operation.toUpperCase();
-         //set SMSs
-         messages = messageService.findMessageById(1L);
-         product.setPc_SMS1(messages.getMessageDesc());
-         messages = messageService.findMessageById(2L);
-         product.setPc_SMS2(messages.getMessageDesc());
-         messages = messageService.findMessageById(3L);
-         product.setPc_SMS3(messages.getMessageDesc());
 
-         //set Results
-         messages = messageService.findMessageById(6L);//result1
-         product.setPc_result1(messages.getMessageDesc());
-         messages = messageService.findMessageById(7L);//result2
-         product.setPc_result2(messages.getMessageDesc());
-         messages = messageService.findMessageById(8L);//result3
-         product.setPc_result3(messages.getMessageDesc());
-         messages = messageService.findMessageById(9L);//result4
-         product.setPc_result4(messages.getMessageDesc());
-         messages = messageService.findMessageById(10L);//result5
-         product.setPc_result5(messages.getMessageDesc());
-         messages = messageService.findMessageById(11L);//result6
-         product.setPc_result6(messages.getMessageDesc());
 
-         product.setPc_SMS4(clientSMS);//sms4
-         product.setPc_operation(pc_operation);
-         product.setPc_prod_code(pc_operation);
-         product.setPc_prod_desc(prodDesc);
-         product.setPc_expiry_window(expiry);
-         product.setPc_channel(channel);
-         product.setPc_sub_type_list(subType);
+        //initialize the parameters to avoid null
 
-         if (product.getPc_sub_type_list().equals("stPre,stHyb")) {
-             //sms5 prepaid
-             messages = messageService.findMessageById(5L);
-             product.setPc_SMS5(messages.getMessageDesc());
-             product.setPc_exc_flag("NO");
-         }
-         else {
-             //sms5 postpaid
-             messages = messageService.findMessageById(12L);
-             product.setPc_SMS5(messages.getMessageDesc());
-             product.setPc_exc_flag("YES");
-         }
+        List<String> channels = new ArrayList<>();
+        List<ProductConfig> all = new ArrayList<>();
 
-         if (route.equalsIgnoreCase("CRM")){
-             product.setPc_tarrif_plan_id("1");
-             product.setPc_opp_type("ADD");
-             if (product.getPc_channel().
-                    equalsIgnoreCase("USSD")) {
-                 product.setPc_queue("VAS");
-             }
-             else{
-                product.setPc_queue("VAS_NEW");
-             }
-         }
-         else if (route.equalsIgnoreCase("CBS")){
-            product.setPc_tarrif_plan_id(tarrif);
-            product.setPc_opp_type("CB040");
-            product.setPc_queue("BUNDLE");
-         }
-         productConfigService.addProduct(product);
+        if (!ussd.equalsIgnoreCase("u") ) {
+              channels.add(ussd);
+        }
+        if (!eshop.equalsIgnoreCase("e") ) {
+            channels.add(eshop);
+        }
+        if (!app.equalsIgnoreCase("a") ) {
+            channels.add(app);
+        }
+        if (!cad.equalsIgnoreCase("c") ) {
+            channels.add(cad);
+        }
+        for (String x : channels) {
+            ProductConfig product = new ProductConfig();
+            String pc_operation = operation.toUpperCase();
+            //set SMSs
+            messages = messageService.findMessageById(1L);
+            product.setPc_SMS1(messages.getMessageDesc());
+            messages = messageService.findMessageById(2L);
+            product.setPc_SMS2(messages.getMessageDesc());
+            messages = messageService.findMessageById(3L);
+            product.setPc_SMS3(messages.getMessageDesc());
 
+            //set Results
+            messages = messageService.findMessageById(6L);//result1
+            product.setPc_result1(messages.getMessageDesc());
+            messages = messageService.findMessageById(7L);//result2
+            product.setPc_result2(messages.getMessageDesc());
+            messages = messageService.findMessageById(8L);//result3
+            product.setPc_result3(messages.getMessageDesc());
+            messages = messageService.findMessageById(9L);//result4
+            product.setPc_result4(messages.getMessageDesc());
+            messages = messageService.findMessageById(10L);//result5
+            product.setPc_result5(messages.getMessageDesc());
+            messages = messageService.findMessageById(11L);//result6
+            product.setPc_result6(messages.getMessageDesc());
+
+            product.setPc_SMS4(clientSMS);//sms4
+            product.setPc_operation(pc_operation);
+            product.setPc_prod_code(pc_operation);
+            product.setPc_prod_desc(prodDesc);
+            product.setPc_expiry_window(expiry);
+            //product.setPc_channel(channel);
+            System.out.println(x);
+            product.setPc_channel(x);
+
+            product.setPc_sub_type_list(subType);
+
+            if (product.getPc_sub_type_list().equals("stPre,stHyb")) {
+                //sms5 prepaid
+                messages = messageService.findMessageById(5L);
+                product.setPc_SMS5(messages.getMessageDesc());
+                product.setPc_exc_flag("NO");
+            } else {
+                //sms5 postpaid
+                messages = messageService.findMessageById(12L);
+                product.setPc_SMS5(messages.getMessageDesc());
+                product.setPc_exc_flag("YES");
+            }
+
+            if (route.equalsIgnoreCase("CRM")) {
+                product.setPc_tarrif_plan_id("1");
+                product.setPc_opp_type("ADD");
+                if (product.getPc_channel().
+                        equalsIgnoreCase("USSD")) {
+                    product.setPc_queue("VAS");
+                } else {
+                    product.setPc_queue("VAS_NEW");
+                }
+            } else if (route.equalsIgnoreCase("CBS")) {
+                product.setPc_tarrif_plan_id(tarrif);
+                product.setPc_opp_type("CB040");
+                product.setPc_queue("BUNDLE");
+            }
+
+            all.add(product);
+            System.out.println(all);
+            //save a list of products
+            //productConfigService.addProduct(product);
+        }
+        productConfigService.saveAllProducts(all);
          return "redirect:/view/added";
     }
     //delete

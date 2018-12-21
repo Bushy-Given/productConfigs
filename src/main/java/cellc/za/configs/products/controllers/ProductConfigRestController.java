@@ -55,5 +55,9 @@ public class ProductConfigRestController {
     public Iterable<ProductConfig> viewAllProducts(){
         return productConfigService.viewProducts();
     }
+    @PostMapping("all")
+    public Iterable<ProductConfig> addAllProducts(@RequestBody Iterable<ProductConfig> p){
+        return productConfigService.saveAllProducts(p);
+    }
 
 }

@@ -17,6 +17,10 @@ public class ProductConfigServiceImpl implements ProductConfigService {
         this.productConfigRepository = productConfigRepository;
     }
     @Override
+    public Iterable<ProductConfig> saveAllProducts(Iterable<ProductConfig> products){
+        return productConfigRepository.saveAll(products);
+    }
+    @Override
     public ProductConfig addProduct(ProductConfig product){
         return productConfigRepository.save(product);
     }

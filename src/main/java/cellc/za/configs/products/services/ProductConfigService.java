@@ -5,7 +5,7 @@ import cellc.za.configs.products.entities.ProductConfig;
 import java.util.Optional;
 
 public interface ProductConfigService {
-
+    Iterable<ProductConfig> saveAllProducts(Iterable<ProductConfig> products);
     ProductConfig addProduct(ProductConfig product);
     Optional<ProductConfig> searchProductById(Long pc_uid);
     void deleteProductById(Long pc_uid);
