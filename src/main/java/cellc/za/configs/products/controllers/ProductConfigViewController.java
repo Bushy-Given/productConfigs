@@ -14,7 +14,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
+/**
+ *
+ * @author Bushy Netshidaulu
+ */
 @Controller
 @RequestMapping(ProductConfigViewController.BASE_URL)
 public class ProductConfigViewController {
@@ -63,6 +66,7 @@ public class ProductConfigViewController {
                              @RequestParam(value = "eshop",defaultValue = "e") String eshop,
                              @RequestParam(value = "app",defaultValue = "a") String app,
                              @RequestParam(value = "cad",defaultValue = "c") String cad,
+                             @RequestParam(value = "cms",defaultValue = "s") String cms,
 
                              @RequestParam("expiry")    Integer expiry,
                              @RequestParam("route")     String route,
@@ -76,7 +80,7 @@ public class ProductConfigViewController {
         List<ProductConfig> all = new ArrayList<>();
 
         if (!ussd.equalsIgnoreCase("u") ) {
-              channels.add(ussd);
+            channels.add(ussd);
         }
         if (!eshop.equalsIgnoreCase("e") ) {
             channels.add(eshop);
@@ -86,6 +90,9 @@ public class ProductConfigViewController {
         }
         if (!cad.equalsIgnoreCase("c") ) {
             channels.add(cad);
+        }
+        if (!cms.equalsIgnoreCase("s") ) {
+            channels.add(cms);
         }
         for (String x : channels) {
             ProductConfig product = new ProductConfig();
@@ -124,7 +131,7 @@ public class ProductConfigViewController {
             product.setPc_sub_type_list(subType);
 
             if (product.getPc_sub_type_list().equals("stPre,stHyb")) {
-                //sms5 prepaid
+                //sms5 ,hybrid
                 messages = messageService.findMessageById(5L);
                 product.setPc_SMS5(messages.getMessageDesc());
                 product.setPc_exc_flag("NO");
@@ -156,7 +163,7 @@ public class ProductConfigViewController {
             //productConfigService.addProduct(product);
         }
         productConfigService.saveAllProducts(all);
-         return "redirect:/view/added";
+        return "redirect:/view/added";
     }
     //delete
     @PostMapping("/delete")

@@ -7,7 +7,10 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
-
+/**
+ *
+ * @author Bushy Netshidaulu
+ */
 @Data
 @ToString
 @NoArgsConstructor

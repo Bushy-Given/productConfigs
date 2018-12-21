@@ -4,7 +4,10 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 import javax.validation.constraints.NotNull;
-
+/**
+ *
+ * @author Bushy Netshidaulu
+ */
 @Configuration
 @ConfigurationProperties("oracle")
 public class OracleConfiguration {

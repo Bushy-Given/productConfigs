@@ -5,7 +5,10 @@ import cellc.za.configs.products.entities.ProductConfig;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-
+/**
+ *
+ * @author Bushy Netshidaulu
+ */
 @Repository
 public interface ProductConfigRepository extends CrudRepository<ProductConfig,Long> {
 

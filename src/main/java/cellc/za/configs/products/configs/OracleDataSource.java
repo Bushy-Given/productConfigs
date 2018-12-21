@@ -1,7 +1,10 @@
 package cellc.za.configs.products.configs;
 
 import javax.validation.constraints.NotNull;
-
+/**
+ *
+ * @author Bushy Netshidaulu
+ */
 public class OracleDataSource {
 
     @NotNull

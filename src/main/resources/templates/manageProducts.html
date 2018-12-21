@@ -322,9 +322,9 @@
                 </th>
 
                 <th>Product(Code)</th>
-                <th>Expiry Window(days)</th>
+                <th>Description</th>
+                <th>Queue</th>
                 <th>Channel</th>
-                <th>Created</th>
                 <th>Actions</th>
 
             <tr th:each="product : ${product}">
@@ -335,9 +335,9 @@
 					</span>
                 </td>
                 <td th:text="${product.pc_prod_code}"></td>
-                <td th:text="${product.pc_expiry_window}"></td>
+                <td th:text="${product.pc_prod_desc}"></td>
+                <td th:text="${product.pc_queue}"></td>
                 <td th:text="${product.pc_channel}"></td>
-                <td th:text="${product.pc_created_date}"></td>
                 <td>
                     <a href="#editProductModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                     <a href="#deleteProductModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
@@ -399,18 +399,12 @@
                     <!-- Channels  Dropdown -->
                     <div class="btn-group dropright">
                         <div class="subtype">
-                            <label>Channel</label>
-                            <select name="channel">
-                                <option value ="ESHOP">ESHOP</option>
-                                <option value ="APP">APP</option>
-                                <option value ="CAD">CAD</option>
-                                <option value ="CMS">CMS</option>
-                                <option value ="USSD">USSD</option>
-                            </select><br>
-                            <input type="checkbox" name="ussd" value="USSD"> USSD<br>
+                            <label>Channel</label><br>
+                            <input type="checkbox" name="ussd" value="USSD" checked> USSD<br>
                             <input type="checkbox" name="eshop" value="ESHOP" > ESHOP<br>
                             <input type="checkbox" name="app" value="APP"> APP<br>
-                            <input type="checkbox" name="cad" value="CAD" checked> CAD<br>
+                            <input type="checkbox" name="cms" value="CMS"> CMS<br>
+                            <input type="checkbox" name="cad" value="CAD" > CAD<br>
                         </div>
                         <div class="subtype">
                             <label>Expiry(days)</label>

@@ -1,6 +1,6 @@
 package cellc.za.configs.products.entities;
 
-import lombok.AllArgsConstructor;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -11,7 +11,10 @@ import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.Date;
-
+/**
+ *
+ * @author Bushy Netshidaulu
+ */
 @Data
 @ToString
 @NoArgsConstructor
